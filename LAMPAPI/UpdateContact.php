@@ -35,10 +35,10 @@
 
         $stmt = $conn->prepare("
             UPDATE Contacts
-               SET FirstName = ?, LastName = ?, Phone = ?, Email = ?, Address = ?
+               SET FirstName = ?, LastName = ?, Phone = ?, Email = ?
              WHERE ID = ? AND UserID = ?
         ");
-        $stmt->bind_param("sssssii", $firstName, $lastName, $phone, $email, $address, $id, $userId);
+        $stmt->bind_param("ssssii", $firstName, $lastName, $phone, $email, $id, $userId);
 
         if ($stmt->execute())
         {

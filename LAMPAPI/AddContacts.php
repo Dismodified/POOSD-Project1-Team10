@@ -14,8 +14,8 @@
 	}
 	else
 	{
-		$stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Phone, Email, Address, UserID) VALUES (?, ?, ?, ?, ?, ?)");
-		$stmt->bind_param("sssssi", $firstName, $lastName, $phone, $email, $address, $userId);
+		$stmt = $conn->prepare("INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES (?, ?, ?, ?, ?)");
+		$stmt->bind_param("sssssi", $firstName, $lastName, $phone, $email, $userId);
 		if($stmt->execute()) {
 			returnWithInfo("Contact added successfully");
 		} else {
