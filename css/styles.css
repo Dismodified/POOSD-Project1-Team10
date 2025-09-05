@@ -435,21 +435,21 @@ body.light{
     );
 }
 body.light #loginDiv{
-  background: rgba(255,255,255,0.85);
-  color: #0f172a;
-  box-shadow: 0 10px 30px rgba(2,6,23,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+  background: rgba(20, 30, 50, 0.9);  /* Darker for night mode */
+  color: #e2e8f0;  /* Light text */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
 }
 body.light input[type="text"],
 body.light input[type="password"],
 body.light input[type="email"]{
-  background: rgba(255,255,255,0.96);
-  color: #0f172a;
-  border: 1px solid rgba(2,6,23,0.15);
+  background: rgba(30, 40, 60, 0.8);
+  color: #e2e8f0;
+  border: 1px solid rgba(100, 150, 200, 0.3);
 }
 body.light .buttons {
-  border: 1px solid rgba(2,6,23,0.08);
-  background: linear-gradient(135deg, #38bdf8 0%, #22c55e 100%);
-  color: #052e47;
+  background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);  /* Cool grays */
+  color: #e2e8f0;
+  border: 1px solid rgba(100, 150, 200, 0.2);
 }
 body.light .shark{ filter: drop-shadow(0 2px 5px rgba(0,0,0,.25)); opacity: .85; }
 
@@ -607,8 +607,8 @@ input[type="email"]{
   padding: 12px 16px;
   border-radius: 12px;
   border: 1px solid rgba(148,163,184,0.25);
-  background: linear-gradient(135deg, var(--btn-grad-a) 0%, var(--btn-grad-b) 100%);
-  color: #0b1220;
+  background: linear-gradient(135deg, #DEB887 0%, #D2B48C 100%); /* Sand colors */
+  color: #4A3728; /* Dark brown text for contrast */
   font-weight: 700;
   letter-spacing: .3px;
   cursor: pointer;
@@ -629,7 +629,7 @@ input[type="email"]{
 }
 .buttons:hover{
   transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(99,102,241,0.35);
+  box-shadow: 0 8px 18px rgba(222, 184, 135, 0.4); /* Sand-colored shadow */
   opacity: .96;
 }
 
@@ -668,3 +668,4 @@ input[type="email"]{
   0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
   20%, 80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
+
