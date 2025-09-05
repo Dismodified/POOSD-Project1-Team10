@@ -1,22 +1,124 @@
 <html>
 <head>
-	<title>COP 4331 LAMP Stack Demo</title>
-	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <title>FinFinder</title>
+  <script type="text/javascript" src="js/md5.js"></script>
+  <script type="text/javascript" src="js/code.js"></script>
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <script type="text/javascript">
+    // Simple fix for back button - remove fade-out class when page shows
+    window.addEventListener('pageshow', function() {
+      document.body.classList.remove('fade-out');
+    });
+    // Optional smooth page transition (used by "Create Account" button)
+    function smoothTransition(url){
+      document.body.classList.add('fade-out');
+      setTimeout(() => location.href = url, 200);
+    }
+  </script>
+  <style>
+    /* tiny helper for smoothTransition */
+    body { transition: opacity .2s ease; }
+    .fade-out { opacity: 0; }
+  </style>
 </head>
 <body>
+  <!-- Enhanced Sharky ocean background & motion -->
+  <div class="ocean-bg" aria-hidden="true">
+    <!-- Sun and Moon -->
+    <div class="celestial-body sun"></div>
+    <div class="celestial-body moon"></div>
 
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
+    <!-- Ocean Floor with Sand -->
+    <div class="ocean-floor"></div>
+    <div class="sand-particles"></div>
 
-<div id="loginDiv">
-	<span id="inner-title">PLEASE LOG IN</span>
-	<input type="text" id="loginName" placeholder="Username" /><br />
-	<input type="password" id="loginPassword" placeholder="Password"/><br />
-	<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Do It </button>
-	<span id="loginResult"></span>
+    <!-- Realistic Water System -->
+    <div class="water-surface">
+      <div class="water-depth"></div>
+      <div class="caustics"></div>
+      <div class="wave-layer wave1"></div>
+      <div class="wave-layer wave2"></div>
+      <div class="wave-layer wave3"></div>
+      <div class="wave-layer wave4"></div>
+      <div class="wave-layer wave5"></div>
+      <div class="wave-layer wave6"></div>
+    </div>
+
+    <!-- Interactive main shark -->
+    <div class="shark interactive" id="mainShark"></div>
+
+    <!-- Background sharks -->
+    <div class="shark s1"></div>
+    <div class="shark s2"></div>
+    <div class="shark s3"></div>
+
+    <div class="stars"></div>
+    <div class="bubbles"></div>
+    <div class="waves"></div>
+  </div>
+  <!-- Login card -->
+  <div id="loginDiv">
+    <h1 id="title">FinFinder</h1>
+    <span id="inner-title">DISCOVER THE DEPTHS</span>
+    <input type="text" id="loginName" placeholder="Username" /><br />
+    <input type="password" id="loginPassword" placeholder="Password"/><br />
+<div class="button-row">
+  <button type="button" id="loginButton" class="buttons side-by-side" onclick="doLogin();">Login</button>
+  <button type="button" class="buttons side-by-side" onclick="smoothTransition('register.html');">Create Account</button>
 </div>
+<button type="button" class="buttons" onclick="toggleTheme();">Toggle Light/Dark</button>
+    <span id="loginResult"></span>
+  </div>
 
+<script>
+    const mainShark = document.getElementById('mainShark');
+    let clickCount = 0;
+    let isLightMode = false;
+
+    // Shark click interaction
+    if (mainShark) {
+      mainShark.addEventListener('click', function(e) {
+        clickCount++;
+
+        // Add spin animation
+        mainShark.classList.add('clicked');
+        setTimeout(() => {
+          mainShark.classList.remove('clicked');
+        }, 1000);
+
+        // Create ripple effect
+        createRipple(e.clientX, e.clientY);
+
+        // Special behavior after multiple clicks
+        if (clickCount >= 5) {
+          clickCount = 0;
+        } else if (clickCount === 3) {
+          // Removed message
+        }
+      });
+    }
+
+    function createRipple(x, y) {
+      const ripple = document.createElement('div');
+      ripple.classList.add('ripple');
+      ripple.style.left = x - 15 + 'px';
+      ripple.style.top = y - 15 + 'px';
+      ripple.style.width = '30px';
+      ripple.style.height = '30px';
+      document.body.appendChild(ripple);
+
+      setTimeout(() => {
+        ripple.remove();
+      }, 800);
+    }
+
+    function toggleTheme() {
+      isLightMode = !isLightMode;
+      document.body.classList.toggle('light', isLightMode);
+    }
+</script>
 </body>
 </html>
