@@ -1,140 +1,670 @@
-body 
-{
-    background-color: #707070;
+/* =========================
+   FinFinder — FULL STYLES
+   ========================= */
+
+:root{
+  /* palette */
+  --bg-top: #0b1d2a;
+  --bg-mid: #0b2233;
+  --bg-bottom: #0a2f47;
+
+  --card-bg-dark: rgba(12, 18, 32, 0.88);
+  --card-bg-light: rgba(255,255,255,0.9);
+
+  --text-main-dark: #e2e8f0;
+  --text-subtle: #a5b4fc;
+
+  --btn-grad-a: #6366f1;
+  --btn-grad-b: #22c55e;
+
+  --input-bg: #0f172a;
+  --input-border: rgba(148,163,184,0.35);
+
+  --shadow-1: 0 10px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+  --shadow-2: 0 6px 24px rgba(0,0,0,.18);
 }
 
-#title 
-{
-    font-size: 40px;
-    width: 100%;
-    margin: 2% 5%;
-    text-align: center;
-    font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
+/* --- Page base --- */
+html, body {
+  min-height: 100%;
+}
+body{
+  margin: 0;
+  background:
+    radial-gradient(circle 80px at 85% 15%, #ffeb3b 0%, #ffc107 30%, rgba(255, 183, 77, 0.6) 60%, transparent 100%),
+    radial-gradient(circle 120px at 85% 15%, rgba(255, 152, 0, 0.4) 0%, transparent 70%),
+    linear-gradient(180deg,
+      #ff6b35 0%,
+      #f7931e 15%,
+      #ffb347 25%,
+      var(--bg-top) 47%,        /* Change from 35% to 45% */
+      var(--bg-mid) 70%,        /* Change from 55% to 65% */
+      var(--bg-bottom) 100%
+    );
+  color: var(--text-main-dark);
+  font-family: 'Ubuntu', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  overflow-x: hidden;
+  transition: all .6s ease;
 }
 
-#loginDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+/* Optional smooth page fade */
+body { opacity: 1; }
+.fade-out { opacity: 0; }
+
+/* ---------- Ocean & Motion Layers (no image files) ---------- */
+/* Background container so we can stack sharks/bubbles/waves */
+.ocean-bg{
+  position: fixed;
+  inset: 0;
+  z-index: 1;           /* behind UI */
+  pointer-events: none;
+  overflow: hidden;
 }
 
-#loggedInDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+/* Enhanced rising bubbles */
+.bubbles{
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle 6px, rgba(255,255,255,.30) 40%, transparent 45%) 10% 90% / 12px 12px,
+    radial-gradient(circle 5px, rgba(255,255,255,.25) 40%, transparent 45%) 30% 95% / 10px 10px,
+    radial-gradient(circle 7px, rgba(255,255,255,.22) 40%, transparent 45%) 55% 92% / 14px 14px,
+    radial-gradient(circle 4px, rgba(255,255,255,.22) 40%, transparent 45%) 75% 97% / 8px 8px,
+    radial-gradient(circle 6px, rgba(255,255,255,.25) 40%, transparent 45%) 90% 93% / 12px 12px,
+    radial-gradient(circle 3px, rgba(255,255,255,.20) 40%, transparent 45%) 20% 85% / 6px 6px,
+    radial-gradient(circle 8px, rgba(255,255,255,.18) 40%, transparent 45%) 65% 88% / 16px 16px;
+  background-repeat: no-repeat;
+  animation: rise 8s linear infinite;
+  opacity: .35;
+}
+@keyframes rise{
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-40vh); }
 }
 
-#accessUIDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+/* Realistic Water System */
+.water-surface {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    font-family: 'Ubuntu', sans-serif;
+/* Multiple wave layers for depth */
+.wave-layer {
+  position: absolute;
+  left: -100%;
+  right: -100%;
+  height: 40px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  border-radius: 50%;
+  transform-origin: center;
 }
 
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
+.wave1 {
+  top: 37%;
+  animation: wave 8s ease-in-out infinite;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,183,77,0.4) 30%,
+    rgba(255,255,255,0.3) 50%,
+    rgba(255,183,77,0.2) 70%,
+    transparent
+  );
 }
 
-#loginName
-{
-	font-size: 30px;
-}
-#loginPassword
-{
-	font-size: 30px;
-}
-#searchText
-{
-	font-size: 30px;
-}
-#colorText
-{
-	font-size: 30px;
+.wave2 {
+  top: 38.5%;
+  animation: wave 10s ease-in-out infinite -2s;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.25) 20%,
+    rgba(255,183,77,0.3) 50%,
+    rgba(255,255,255,0.2) 80%,
+    transparent
+  );
 }
 
-input[type="text"],input[type="password"]{
-    border-radius: 25px;
-    text-align: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
+.wave3 {
+  top: 40%;
+  animation: wave 12s ease-in-out infinite -4s;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.2) 40%,
+    rgba(255,183,77,0.25) 60%,
+    transparent
+  );
 }
 
+.wave4 {
+  top: 41.5%;
+  animation: wave 15s ease-in-out infinite -1s;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.15) 50%,
+    transparent
+  );
+}
+
+.wave5 {
+  top: 43%;
+  animation: wave 9s ease-in-out infinite -3s;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.18) 35%,
+    rgba(255,183,77,0.22) 55%,
+    rgba(255,255,255,0.16) 75%,
+    transparent
+  );
+}
+
+.wave6 {
+  top: 44.5%;
+  animation: wave 11s ease-in-out infinite -5s;
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,183,77,0.2) 25%,
+    rgba(255,255,255,0.14) 50%,
+    rgba(255,183,77,0.18) 75%,
+    transparent
+  );
+}
+@keyframes wave {
+  0%, 100% {
+    transform: translateX(-50px) scaleY(0.8);
+    opacity: 0.6;
+  }
+  25% {
+    transform: translateX(-25px) scaleY(1.2);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(0px) scaleY(1);
+    opacity: 1;
+  }
+  75% {
+    transform: translateX(25px) scaleY(0.9);
+    opacity: 0.7;
+  }
+}
+
+/* Water caustics effect */
+.caustics {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 300px 100px at 20% 40%, rgba(255,255,255,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 250px 80px at 60% 50%, rgba(255,255,255,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 200px 60px at 80% 30%, rgba(255,255,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 180px 50px at 30% 70%, rgba(255,255,255,0.05) 0%, transparent 60%);
+  background-size: 400px 200px, 350px 180px, 300px 150px, 280px 140px;
+  animation: causticShift 20s ease-in-out infinite;
+  opacity: 0.4;
+}
+
+@keyframes causticShift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 100%, 50% 0%, 0% 100%;
+    transform: scale(1);
+  }
+  25% {
+    background-position: 25% 25%, 75% 75%, 75% 25%, 25% 75%;
+    transform: scale(1.05);
+  }
+  50% {
+    background-position: 50% 50%, 50% 50%, 100% 50%, 50% 50%;
+    transform: scale(0.95);
+  }
+  75% {
+    background-position: 75% 25%, 25% 75%, 25% 75%, 75% 25%;
+    transform: scale(1.02);
+  }
+}
+/* Water depth gradient */
+.water-depth {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    transparent 40%,                    /* Add more sky space */
+    rgba(11, 29, 42, 0.1) 50%,        /* Push water effects down */
+    rgba(11, 34, 51, 0.2) 65%,
+    rgba(10, 47, 71, 0.3) 80%,
+    rgba(10, 47, 71, 0.4) 100%
+  );
+}
+
+/* Night mode water adjustments */
+body.light .wave1 {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(220,220,255,0.5) 30%,
+    rgba(255,255,255,0.4) 50%,
+    rgba(220,220,255,0.3) 70%,
+    transparent
+  );
+}
+
+body.light .wave2 {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.3) 20%,
+    rgba(220,220,255,0.4) 50%,
+    rgba(255,255,255,0.25) 80%,
+    transparent
+  );
+}
+
+body.light .wave3 {
+  background: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.25) 40%,
+    rgba(220,220,255,0.3) 60%,
+    transparent
+  );
+}
+
+body.light .caustics {
+  background:
+    radial-gradient(ellipse 300px 100px at 20% 40%, rgba(220,220,255,0.15) 0%, transparent 60%),
+    radial-gradient(ellipse 250px 80px at 60% 50%, rgba(255,255,255,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 200px 60px at 80% 30%, rgba(220,220,255,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 180px 50px at 30% 70%, rgba(255,255,255,0.08) 0%, transparent 60%);
+}
+
+:root{
+  --shark-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 408 143'><defs><linearGradient id='sharkGrad' x1='0%25' y1='0%25' x2='0%25' y2='100%25'><stop offset='0%25' style='stop-color:%23555b66;stop-opacity:1' /><stop offset='30%25' style='stop-color:%236b7280;stop-opacity:1' /><stop offset='70%25' style='stop-color:%23969ca8;stop-opacity:1' /><stop offset='100%25' style='stop-color:%23d1d5db;stop-opacity:1' /></linearGradient></defs><path fill='url(%23sharkGrad)' d='M3,34.5c0,0,4.2,5.6,4.5,11.3c0,0,13.1,9.9,27.6,36.8c0,0,3.6,6.1-1.5,13.8l-4.9,8.8c0,0-4.2,12.9-12.2,16l0.8,2.9c0,0,32.6,3.8,56.8-28.3l22.6-1.3c0,0,4.4,6.2,3.9,8.7c0,0,7.1,0.5,11.8-7l21.6,2.3l2,2.5l9.8,4.2c0,0,2.6,7.4,5.3,6.3l13.7-5.6c0,0,54.9,10.5,85.1,6.9l5.3,6.3c0,0,1,3.8-2.6,8l-8.1,8.9c0,0-2.9,3-1,5.7c0,0,2.9,1,6.4-0.2c0,0,33.9-4.6,45-26.5l43.4-2.1c0,0,33.9-2,38.4-14.8l-6.7-1.7c0,0,5.4-7.2,11.4-4.6l21.6-12.1c0,0,4.6-2.3-1.1-5.8c0,0-53.7-34.6-155.2-30.8c0,0-12.2-16.4-16.1-24.2c0,0-9-15.8-20.6-17.9c0,0-6.3-1-4,4.8c0,0,6.3,22.9-8.8,40.2c0,0-44.5,8.8-79.2,21c0,0-5.9-5-10.2-5.2l-1.3,1.8c0,0,2,4.4,0.7,7.5c0,0-15.4,4.4-27.8,10.4c0,0-30.4-34.2-72.6-50.5C6.3,31.3,0,29.3,3,34.5z'/><circle fill='%23000' cx='360' cy='77' r='3'/></svg>");
+}
+/* Update your shark class to make them bigger */
+.shark{
+  position: absolute;
+  width: 240px;           /* Increased from 200px */
+  height: 85px;           /* Increased from 70px */
+  background-image: var(--shark-svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,.35));
+  opacity: .9;
+  z-index: 2;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  pointer-events: auto;
+}
+
+/* Interactive shark even bigger */
+.shark.interactive {
+  width: 260px;           /* Increased from 220px */
+  height: 95px;           /* Increased from 80px */
+  z-index: 15;
+}
+
+.shark:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,.5));
+}
+
+.shark.clicked {
+  animation: spin 1s ease-out;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) scale(1.1); }
+  50% { transform: rotate(180deg) scale(1.3); }
+  100% { transform: rotate(360deg) scale(1.1); }
+}
+/* Enhanced swim animation with wave pattern */
+@keyframes swimWave{
+  0% {
+    left: -200px;
+    top: 20%;
+    transform: rotate(0deg);
+  }
+  25% {
+    left: 25%;
+    top: 35%;
+    transform: rotate(-3deg);
+  }
+  50% {
+    left: 50%;
+    top: 25%;
+    transform: rotate(3deg);
+  }
+  75% {
+    left: 75%;
+    top: 40%;
+    transform: rotate(-2deg);
+  }
+  100% {
+    left: calc(100% + 200px);
+    top: 30%;
+    transform: rotate(0deg);
+  }
+}
+
+/* Interactive main shark */
+.shark.interactive{
+  animation: swimWave 12s infinite ease-in-out;
+  z-index: 15;
+}
+
+/* Background sharks (original animation) */
+@keyframes swimL2R{
+  0%   { transform: translateX(-220px) translateY(0) scaleX(1); }
+  50%  { transform: translateX(calc(100vw + 220px)) translateY(-8px) scaleX(1); }
+  51%  { transform: translateX(calc(100vw + 220px)) translateY(-8px) scaleX(-1); }
+  100% { transform: translateX(-220px) translateY(0) scaleX(-1); }
+}
+
+/* Background sharks with original depths/speeds */
+.shark.s1{ top: 55%; animation: swimL2R 20s linear infinite; opacity: .65; }
+.shark.s2{ top: 85%; animation: swimL2R 26s linear infinite 3s; opacity: .55; }
+.shark.s3{ top: 65%; animation: swimL2R 22s linear infinite 6s; opacity: .6; }
+
+/* Ripple effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(167, 181, 252, 0.6);
+  transform: scale(0);
+  animation: rippleEffect 0.8s linear;
+  pointer-events: none;
+  z-index: 10;
+}
+@keyframes rippleEffect {
+  to {
+    transform: scale(6);
+    opacity: 0;
+  }
+}
+
+/* Sun and Moon Elements */
+.celestial-body {
+  position: absolute;
+  border-radius: 50%;
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+
+.sun {
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, #ffeb3b 0%, #ffc107 50%, #ff9800 100%);
+  box-shadow: 0 0 50px rgba(255, 235, 59, 0.6), 0 0 100px rgba(255, 193, 7, 0.3);
+  top: 10%;
+  right: 10%;
+  opacity: 1;
+  z-index: 3;
+}
+
+.moon {
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle at 30% 30%, #f5f5f5 0%, #e8e8e8 50%, #d0d0d0 100%);
+  box-shadow:
+    inset -10px -10px 0 rgba(200, 200, 200, 0.3),
+    0 0 30px rgba(245, 245, 245, 0.8),
+    0 0 60px rgba(200, 200, 255, 0.4);
+  top: 12%;
+  left: 12%;
+  opacity: 0;
+  z-index: 3;
+}
+
+body.light .sun {
+  opacity: 0;
+}
+
+body.light .moon {
+  opacity: 1;
+}
+/* ---------- Light Mode (Dark Night Sky with Moon) ---------- */
+body.light{
+  color: #0f172a;
+  background:
+    radial-gradient(circle 60px at 15% 20%, #f5f5f5 0%, #e8e8e8 40%, rgba(220, 220, 220, 0.8) 70%, transparent 100%),
+    radial-gradient(circle 100px at 15% 20%, rgba(200, 200, 255, 0.3) 0%, transparent 80%),
+    linear-gradient(180deg,
+      #1a1a2e 0%,
+      #16213e 20%,
+      #0f3460 35%,
+      #1e3a8a 50%,
+      #1e40af 70%,
+      #1d4ed8 100%
+    );
+}
+body.light #loginDiv{
+  background: rgba(255,255,255,0.85);
+  color: #0f172a;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+body.light input[type="text"],
+body.light input[type="password"],
+body.light input[type="email"]{
+  background: rgba(255,255,255,0.96);
+  color: #0f172a;
+  border: 1px solid rgba(2,6,23,0.15);
+}
+body.light .buttons {
+  border: 1px solid rgba(2,6,23,0.08);
+  background: linear-gradient(135deg, #38bdf8 0%, #22c55e 100%);
+  color: #052e47;
+}
+body.light .shark{ filter: drop-shadow(0 2px 5px rgba(0,0,0,.25)); opacity: .85; }
+
+body.light .message-popup {
+  background: rgba(255,255,255,0.9);
+  color: #0f172a;
+}
+
+/* Stars for night mode */
+.stars {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.8), transparent 1px),
+    radial-gradient(1px 1px at 40% 15%, rgba(255,255,255,0.6), transparent 1px),
+    radial-gradient(2px 2px at 65% 25%, rgba(255,255,255,0.7), transparent 2px),
+    radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.5), transparent 1px),
+    radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,0.6), transparent 1px),
+    radial-gradient(2px 2px at 25% 20%, rgba(255,255,255,0.4), transparent 2px),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.5), transparent 1px);
+  background-size: 200px 200px, 300px 300px, 250px 250px, 400px 400px, 350px 350px, 500px 500px, 450px 450px;
+  background-repeat: repeat;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+body.light .stars {
+  opacity: 1;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 1; }
+}
+
+.ocean-floor {
+  position: absolute;
+  bottom: 0;              /* Sticks to bottom of screen */
+  left: 0;
+  right: 0;
+  height: 80px;           /* 80px tall sand layer */
+  background:
+    /* Sand mounds/ripples */
+    radial-gradient(ellipse 150px 20px at 20% 60%, rgba(139, 116, 88, 0.4) 0%, transparent 70%),
+    radial-gradient(ellipse 120px 15px at 60% 70%, rgba(139, 116, 88, 0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 180px 25px at 80% 50%, rgba(139, 116, 88, 0.35) 0%, transparent 70%),
+    /* Main sand gradient */
+    linear-gradient(180deg,
+      transparent 0%,
+      rgba(160, 135, 105, 0.3) 30%,
+      rgba(139, 116, 88, 0.6) 60%,
+      rgba(120, 100, 75, 0.8) 100%
+    );
+  z-index: 1;
+}
+
+.sand-particles {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background:
+    radial-gradient(circle 2px at 15% 30%, rgba(180, 155, 125, 0.8) 0%, transparent 50%),
+    radial-gradient(circle 1px at 35% 60%, rgba(160, 135, 105, 0.6) 0%, transparent 50%),
+    radial-gradient(circle 3px at 55% 40%, rgba(190, 165, 135, 0.7) 0%, transparent 50%),
+    radial-gradient(circle 1px at 75% 70%, rgba(170, 145, 115, 0.5) 0%, transparent 50%),
+    radial-gradient(circle 2px at 85% 20%, rgba(185, 160, 130, 0.6) 0%, transparent 50%),
+    radial-gradient(circle 1px at 25% 80%, rgba(175, 150, 120, 0.4) 0%, transparent 50%);
+  background-size: 200px 60px, 150px 60px, 180px 60px, 120px 60px, 160px 60px, 140px 60px;
+  animation: sandShift 25s linear infinite;
+  z-index: 2;
+}
+@keyframes sandShift {
+  0% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
+  100% { background-position: 200px 0%, 150px 0%, 180px 0%, 120px 0%, 160px 0%, 140px 0%; }
+}
+
+.waves{
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 45%;              /* Move down from 28% */
+  height: 80px;          /* Reduce from 120px */
+  background:
+    radial-gradient(80px 15px at 10% 50%, rgba(255,255,255,.15), transparent 70%) repeat-x,
+    radial-gradient(100px 18px at 40% 50%, rgba(255,255,255,.12), transparent 70%) repeat-x,
+    radial-gradient(70px 12px  at 70% 50%, rgba(255,255,255,.10), transparent 70%) repeat-x;
+  background-size: 250px 80px, 300px 80px, 200px 80px;
+  animation: swell 15s linear infinite;
+  opacity: .15;          /* Reduce from .28 */
+}
+
+@keyframes swell{
+  0%{ background-position: 0 0, 0 0, 0 0; }
+  100%{ background-position: 300px 0, 360px 0, 280px 0; }
+}
+
+/* ---------- Login Card & Controls ---------- */
+
+#loginDiv{
+  font-size: 18px;
+  width: 500px;
+  max-width: 92vw;
+  padding: 32px;
+  border-radius: 16px;
+  background: var(--card-bg-dark);
+  box-shadow: var(--shadow-1);
+  backdrop-filter: blur(8px);
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 25;
+}
+
+#title{
+  font-size: 55px;
+  text-align: center;
+  margin: 0 0 10px 0;
+  color: var(--text-main-dark);
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 800;
+}
 #inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+  display: block;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-subtle);
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+input[type="email"]{
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 12px;
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
+  color: var(--text-main-dark);
+  outline: none;
+  padding: 12px 14px;
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+/* Buttons */
+.buttons{
+  display: inline-block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(148,163,184,0.25);
+  background: linear-gradient(135deg, var(--btn-grad-a) 0%, var(--btn-grad-b) 100%);
+  color: #0b1220;
+  font-weight: 700;
+  letter-spacing: .3px;
+  cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+}
+
+/* Button container for side-by-side layout */
+.button-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* Side-by-side button variant */
+.buttons.side-by-side {
+  width: calc(50% - 6px);  /* Split width minus half the gap */
+  margin-top: 0;           /* Remove since container handles spacing */
+}
+.buttons:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(99,102,241,0.35);
+  opacity: .96;
 }
 
 #loginResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+  display: block;
+  text-align: center;
+  margin-top: 12px;
+  font-size: 14px;
+  color: #f43f5e;
 }
 
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
+/* ---------- Responsive ---------- */
+@media (max-width: 520px){
+  #loginDiv{ width: 92vw; padding: 28px; }
+  #title{ font-size: 34px; }
 }
 
-#logoutButton{
-    width: 20%;
-    margin-left: 40%;
+/* Message popup */
+.message-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--card-bg-dark);
+  color: var(--text-main-dark);
+  padding: 16px 24px;
+  border-radius: 16px;
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-1);
+  font-size: 16px;
+  z-index: 100;
+  animation: fadeInOut 2.5s ease-in-out forwards;
 }
 
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
-
-#colorSearchResult{
-    display: none;
-}
-
-#colorAddResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-top: 2%;
-    margin-bottom: 1%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  20%, 80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
