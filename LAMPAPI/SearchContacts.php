@@ -16,7 +16,7 @@ if ($conn->connect_error)
         //search for any partcial matches
         $contactName = "%" . $inData["search"] . "%";
 
-        $stmt->bind_param("sss", $contactName, $contactName, $inData["userId"]);
+        $stmt->bind_param("ssi", $contactName, $contactName, $inData["userId"]);
         $stmt->execute();
 
         $result = $stmt->get_result();
@@ -71,3 +71,4 @@ if ($conn->connect_error)
     }
 
 ?>
+
