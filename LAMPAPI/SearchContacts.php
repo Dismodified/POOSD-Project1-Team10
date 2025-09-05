@@ -1,82 +1,52 @@
 <?php
-
-	$inData = getRequestInfo();
-	
-	$searchResults = "";
-	$searchCount = 0;
-
-	$conn = new mysqli("localhost", "Great", "White", "SharkWeek");
-if ($conn->connect_error) 
-    {
-        returnWithError( $conn->connect_error );
-    } 
-    else
-    {
-        //searches for contacts that match the search string in either first or last name
-        $stmt = $conn->prepare("SELECT FirstName, LastName, Phone, Email FROM Contacts WHERE (FirstName LIKE ? OR LastName LIKE ?) AND UserID = ?");
+    $inData = getRequestInfo();
+    
+    $id = $inData["id"];
+    $firstName = $inData["firstName"];
+    $lastName = $inData["lastName"];
+    $phone = $inData["phone"];
+    $email = $inData["email"];
+    $userId = $inData["userId"];
+    
+    $conn = new mysqli("localhost", "Great", "White", "SharkWeek");
+    
+    if ($conn->connect_error) {
+        returnWithError($conn->connect_error);
+    } else {
+        // UPDATE query instead of SELECT
+        $stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Phone=?, Email=? WHERE ID=? AND UserID=?");
+        $stmt->bind_param("ssssii", $firstName, $lastName, $phone, $email, $id, $userId);
         
-        //search for any partcial matches
-        $contactName = "%" . $inData["search"] . "%";
-        
-        
-        $stmt->bind_param("sss", $contactName, $contactName, $inData["userId"]);
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
-        
-        while($row = $result->fetch_assoc())
-        {
-            if( $searchCount > 0 )
-            {
-                $searchResults .= ",";
+        if($stmt->execute()) {
+            if($stmt->affected_rows > 0) {
+                returnWithInfo("Contact updated successfully");
+            } else {
+                returnWithError("No contact found or no changes made");
             }
-            $searchCount++;
-            
-            //returns the first and last names of the matching contacts
-            $searchResults .= '{"firstName": "' . $row["FirstName"] . '", "lastName": "' . $row["LastName"] . '", "phone": "' . $row["Phone"] . '", "email": "' . $row["Email"] . '"}';
-        }
-        
-        //if no records were found, return an error message
-        if( $searchCount == 0 )
-        {
-            returnWithError( "No Records Found" );
-        }
-        else
-        {
-            returnWithInfo( $searchResults );
+        } else {
+            returnWithError($stmt->error);
         }
         
         $stmt->close();
         $conn->close();
     }
-
     
-    function getRequestInfo()
-    {
+    function getRequestInfo() {
         return json_decode(file_get_contents('php://input'), true);
     }
-
-
     
-    function sendResultInfoAsJson( $obj )
-    {
+    function sendResultInfoAsJson($obj) {
         header('Content-type: application/json');
         echo $obj;
     }
     
-    
-    function returnWithError( $err )
-    {
-        $retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
-        sendResultInfoAsJson( $retValue );
+    function returnWithError($err) {
+        $retValue = '{"error":"' . $err . '"}';
+        sendResultInfoAsJson($retValue);
     }
     
-    
-    function returnWithInfo( $searchResults )
-    {
-        $retValue = '{"results":[' . $searchResults . '],"error":""}';
-        sendResultInfoAsJson( $retValue );
+    function returnWithInfo($msg) {
+        $retValue = '{"error":"", "message":"' . $msg . '"}';
+        sendResultInfoAsJson($retValue);
     }
-    
 ?>
-
