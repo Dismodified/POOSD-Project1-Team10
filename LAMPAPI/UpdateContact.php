@@ -8,7 +8,6 @@
     $lastName  = $inData["lastName"]  ?? "";
     $phone     = $inData["phone"]     ?? "";
     $email     = $inData["email"]     ?? "";
-    $address   = $inData["address"]   ?? "";
 
     if ($id <= 0 || $userId <= 0) {
         returnWithError("Missing or invalid id/userId");
