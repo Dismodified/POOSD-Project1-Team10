@@ -5,26 +5,17 @@ CREATE TABLE Contacts ( ID INT NOT NULL AUTO_INCREMENT , FirstName VARCHAR(50) N
 CREATE TABLE Users ( ID INT NOT NULL AUTO_INCREMENT , FirstName VARCHAR(50) NOT NULL DEFAULT '' , LastName VARCHAR(50) NOT NULL DEFAULT '' , Login VARCHAR(50) NOT NULL DEFAULT '' , Password VARCHAR(50) NOT NULL DEFAULT '' , PRIMARY KEY (ID)) ENGINE = InnoDB;
 
 INSERT INTO Users (FirstName, LastName, Login, Password) VALUES
-    ('Rick','Leinecker','RickL','COP4331'),
-    ('Admin','Admin','Admin','Admin'),
-    ('Test','Test','Test','Test'),
-    ('Corey','Corey','Corey','Corey'),
-    ('Sam','Hill','SamH','Test');
+    ('Lemon','Shark','NBrevirostris','FelipePoey'),
+    ('Basking','Shark','CMaximus','JohanGunnerus');
 
 INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES
-('Corey','Corey','123-456-7890','sample@ucf.edu',1),
-('Corey','Corey','123-456-7890','sample@ucf.edu',2),
-('Corey','Corey','123-456-7890','sample@ucf.edu',3),
-('Sam','Hill','987-654-3210','test@ucf.edu',1),
-('Sam','Hill','987-654-3210','test@ucf.edu',2),
-('Sam','Hill','987-654-3210','test@ucf.edu',3),
-('UniqueTo','Rick','111-222-3333','1@ucf.edu',1),
-('UniqueTo','Admin','444-555-6666','2@ucf.edu',2),
-('UniqueTo','Test','777-888-9999','3@ucf.edu',3);
+('Basking','Shark','000-555-0182','bshark@example.com',1),
+('Lemon','Shark','000-555-0187','lshark@example.com',2);
 
 SHOW TABLES;
 SELECT COUNT(*) FROM Users;
 SELECT COUNT(*) FROM Contacts;
+
 
 
 
