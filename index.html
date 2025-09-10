@@ -27,9 +27,8 @@
 <body>
   <!-- Enhanced Sharky ocean background & motion -->
   <div class="ocean-bg" aria-hidden="true">
-    <!-- Sun and Moon -->
+    <!-- Sun -->
     <div class="celestial-body sun"></div>
-    <div class="celestial-body moon"></div>
 
     <!-- Ocean Floor with Sand -->
     <div class="ocean-floor"></div>
@@ -47,36 +46,38 @@
       <div class="wave-layer wave6"></div>
     </div>
 
-    <!-- Interactive main shark -->
-    <div class="shark interactive" id="mainShark"></div>
-
     <!-- Background sharks -->
     <div class="shark s1"></div>
     <div class="shark s2"></div>
     <div class="shark s3"></div>
 
-    <div class="stars"></div>
     <div class="bubbles"></div>
-    <div class="waves"></div>
   </div>
+  
   <!-- Login card -->
   <div id="loginDiv">
-    <h1 id="title">FinFinder</h1>
-    <span id="inner-title">DISCOVER THE DEPTHS</span>
-    <input type="text" id="loginName" placeholder="Username" /><br />
-    <input type="password" id="loginPassword" placeholder="Password"/><br />
-<div class="button-row">
-  <button type="button" id="loginButton" class="buttons side-by-side" onclick="doLogin();">Login</button>
-  <button type="button" class="buttons side-by-side" onclick="smoothTransition('register.html');">Create Account</button>
-</div>
-<button type="button" class="buttons" onclick="toggleTheme();">Toggle Light/Dark</button>
-    <span id="loginResult"></span>
-  </div>
+    <div class="title-container">
+      <h1 id="title">FinFinder</h1>
+    </div>
+    <span id="inner-title"></span>
 
-<script>
+    <div class="form-container">
+      <div class="form-inputs">
+        <input type="text" id="loginName" placeholder="Username" />
+        <input type="password" id="loginPassword" placeholder="Password"/>
+        <span id="loginResult"></span>
+      </div>
+
+      <div class="form-controls">
+        <button type="button" id="loginButton" class="buttons" onclick="doLogin();">Login</button>
+        <button type="button" class="buttons" onclick="smoothTransition('register.html');">Create Account</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
     const mainShark = document.getElementById('mainShark');
     let clickCount = 0;
-    let isLightMode = false;
 
     // Shark click interaction
     if (mainShark) {
@@ -100,7 +101,7 @@
         }
       });
     }
-
+    
     function createRipple(x, y) {
       const ripple = document.createElement('div');
       ripple.classList.add('ripple');
@@ -114,11 +115,6 @@
         ripple.remove();
       }, 800);
     }
-
-    function toggleTheme() {
-      isLightMode = !isLightMode;
-      document.body.classList.toggle('light', isLightMode);
-    }
-</script>
+  </script>
 </body>
 </html>
