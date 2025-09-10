@@ -15,7 +15,7 @@ INSERT INTO Users (FirstName, LastName, Login, Password) VALUES
     ('Cuban','Dogfish','SCubensis','LuisHowell-Rivero'),
     ('Mandarin','Dogfish','CBarbifer','ShigehoTanaka'),
     ('Potato','Puffer','TMiurus','GeorgeBoulenger'),
-    ('Prickly','Puffer','EGuttifer','EdwardBennett');
+    ('Prickly','Puffer','EGuttifer','EdwardBennett'),
     ('Great','White','Test','Test');
 
 INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES
@@ -42,6 +42,7 @@ INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES
 SHOW TABLES;
 SELECT COUNT(*) FROM Users;
 SELECT COUNT(*) FROM Contacts;
+
 
 
 
