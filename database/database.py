@@ -40,8 +40,9 @@ INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES
     ('Potato','Puffer','000-555-1902','popuffer@example.com',12);
 
 SHOW TABLES;
-SELECT COUNT(*) FROM Users;
-SELECT COUNT(*) FROM Contacts;
+SELECT * FROM Users;
+SELECT * FROM Contacts;
+
 
 
 
