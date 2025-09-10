@@ -26,27 +26,17 @@ html, body {
 
 body{
   margin: 0;
-  /* Replace 'your-background-image.jpg' with your actual image path */
-  background: url('images/ocean-background.jpg') center/cover no-repeat fixed;
-  /* Fallback gradient in case image doesn't load */
-  background-color: var(--bg-mid);
+  /* Dark blue gradient background that matches your current design */
+  background: linear-gradient(180deg,
+    #0f172a 0%,
+    #1e293b 30%,
+    #334155 70%,
+    #475569 100%
+  );
   color: var(--text-main-dark);
   font-family: 'Ubuntu', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   overflow-x: hidden;
   min-height: 100vh;
-}
-
-/* Optional: Add a subtle overlay to ensure text readability */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(11, 29, 42, 0.3); /* Dark blue overlay */
-  pointer-events: none;
-  z-index: 1;
 }
 
 /* ---------- Login Card & Controls ---------- */
