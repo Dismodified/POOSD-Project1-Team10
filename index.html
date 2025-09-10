@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>FinFinder</title>
@@ -12,70 +13,39 @@
     window.addEventListener('pageshow', function() {
       document.body.classList.remove('fade-out');
     });
-    // Optional smooth page transition (used by "Create Account" button)
+    // Smooth page transition (updated timing to match CSS)
     function smoothTransition(url){
       document.body.classList.add('fade-out');
-      setTimeout(() => location.href = url, 200);
+      setTimeout(() => location.href = url, 400);
     }
   </script>
   <style>
-    /* tiny helper for smoothTransition */
-    body { transition: opacity .2s ease; }
-    .fade-out { opacity: 0; }
+    /* Page transition helper - matches styles.css */
+    body { transition: opacity .4s ease; }
+    .fade-out { 
+      opacity: 0;
+      transform: translateY(-20px);
+    }
   </style>
 </head>
 <body>
-  <!-- Enhanced Sharky ocean background & motion -->
-  <div class="ocean-bg" aria-hidden="true">
-    <!-- Sun -->
-    <div class="celestial-body sun"></div>
-
-    <!-- Ocean Floor with Sand -->
-    <div class="ocean-floor"></div>
-    <div class="sand-particles"></div>
-
-    <!-- Realistic Water System -->
-    <div class="water-surface">
-      <div class="water-depth"></div>
-      <div class="caustics"></div>
-      <div class="wave-layer wave1"></div>
-      <div class="wave-layer wave2"></div>
-      <div class="wave-layer wave3"></div>
-      <div class="wave-layer wave4"></div>
-      <div class="wave-layer wave5"></div>
-      <div class="wave-layer wave6"></div>
-    </div>
-
-    <!-- Background sharks -->
-    <div class="shark s1"></div>
-    <div class="shark s2"></div>
-    <div class="shark s3"></div>
-
-    <div class="bubbles"></div>
-  </div>
-  
   <!-- Login card -->
   <div id="loginDiv">
     <div class="title-container">
       <h1 id="title">FinFinder</h1>
     </div>
     <span id="inner-title"></span>
-
     <div class="form-container">
       <div class="form-inputs">
         <input type="text" id="loginName" placeholder="Username" />
         <input type="password" id="loginPassword" placeholder="Password"/>
         <span id="loginResult"></span>
       </div>
-
       <div class="form-controls">
         <button type="button" id="loginButton" class="buttons" onclick="doLogin();">Login</button>
         <button type="button" class="buttons" onclick="smoothTransition('register.html');">Create Account</button>
       </div>
     </div>
   </div>
-  
-  <script>
-  </script>
 </body>
 </html>
