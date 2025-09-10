@@ -1,7 +1,3 @@
-/* =========================
-   FinFinder — ORIGINAL THEME
-   ========================= */
-
 :root{
   /* palette */
   --bg-top: #0b1d2a;
@@ -510,3 +506,4 @@ input[type="email"]{
   0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
   20%, 80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
+
