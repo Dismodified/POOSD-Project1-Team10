@@ -33,15 +33,16 @@ INSERT INTO Contacts (FirstName, LastName, Phone, Email, UserID) VALUES
     ('Titan','Triggerfish','000-555-1801','ttrigger@example.com',6),
     ('Moorish','Idol','000-555-1759','midol@example.com',6),
     ('Titan','Triggerfish','000-555-1801','ttrigger@example.com',7),
-    ('Orange-Lined','Triggerfish','000-555-1797','oltrigger@example.com',7),
-    ('Spiny','Dogfish','000-555-1758','sdogfish@example.com',8),
+    ('Orange-Lined','Triggerfish','000-555-1797','oltrigger@example.com',8),
     ('Spiny','Dogfish','000-555-1758','sdogfish@example.com',9),
-    ('Prickly','Puffer','000-555-1831','ppuffer@example.com',10),
-    ('Potato','Puffer','000-555-1902','popuffer@example.com',11);
+    ('Spiny','Dogfish','000-555-1758','sdogfish@example.com',10),
+    ('Prickly','Puffer','000-555-1831','ppuffer@example.com',11),
+    ('Potato','Puffer','000-555-1902','popuffer@example.com',12);
 
 SHOW TABLES;
 SELECT COUNT(*) FROM Users;
 SELECT COUNT(*) FROM Contacts;
+
 
 
 
