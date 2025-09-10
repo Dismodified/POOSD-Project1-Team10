@@ -76,45 +76,6 @@
   </div>
   
   <script>
-    const mainShark = document.getElementById('mainShark');
-    let clickCount = 0;
-
-    // Shark click interaction
-    if (mainShark) {
-      mainShark.addEventListener('click', function(e) {
-        clickCount++;
-
-        // Add spin animation
-        mainShark.classList.add('clicked');
-        setTimeout(() => {
-          mainShark.classList.remove('clicked');
-        }, 1000);
-
-        // Create ripple effect
-        createRipple(e.clientX, e.clientY);
-
-        // Special behavior after multiple clicks
-        if (clickCount >= 5) {
-          clickCount = 0;
-        } else if (clickCount === 3) {
-          // Removed message
-        }
-      });
-    }
-    
-    function createRipple(x, y) {
-      const ripple = document.createElement('div');
-      ripple.classList.add('ripple');
-      ripple.style.left = x - 15 + 'px';
-      ripple.style.top = y - 15 + 'px';
-      ripple.style.width = '30px';
-      ripple.style.height = '30px';
-      document.body.appendChild(ripple);
-
-      setTimeout(() => {
-        ripple.remove();
-      }, 800);
-    }
   </script>
 </body>
 </html>
