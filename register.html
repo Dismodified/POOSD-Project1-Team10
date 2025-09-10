@@ -1,1 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FinFinder - Create Account</title>
+  <script type="text/javascript" src="js/md5.js"></script>
+  <script type="text/javascript" src="js/code.js"></script>
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:,">
+  <script type="text/javascript">
+    // Simple fix for back button - remove fade-out class when page shows
+    window.addEventListener('pageshow', function() {
+      document.body.classList.remove('fade-out');
+    });
+    // Optional smooth page transition
+    function smoothTransition(url){
+      document.body.classList.add('fade-out');
+      setTimeout(() => location.href = url, 200);
+    }
 
+    // Registration form validation
+    function validateForm() {
+      const username = document.getElementById('registerUsername').value.trim();
+      const email = document.getElementById('registerEmail').value.trim();
+      const password = document.getElementById('registerPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      
+      // Clear previous results
+      document.getElementById('registerResult').textContent = '';
+      
+      // Basic validation
+      if (!username || !email || !password || !confirmPassword || !firstName || !lastName) {
+        showMessage('Please fill in all fields', 'error');
+        return false;
+      }
+      
+      if (username.length < 3) {
+        showMessage('Username must be at least 3 characters long', 'error');
+        return false;
+      }
+      
+      if (!isValidEmail(email)) {
+        showMessage('Please enter a valid email address', 'error');
+        return false;
+      }
+      
+      if (password.length < 6) {
+        showMessage('Password must be at least 6 characters long', 'error');
+        return false;
+      }
+      
+      if (password !== confirmPassword) {
+        showMessage('Passwords do not match', 'error');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+    
+    function doRegister() {
+      if (!validateForm()) {
+        return;
+      }
+      
+      // Here you would typically send the data to your server
+      // For now, we'll just show a success message
+      showMessage('Account created successfully! Redirecting to login...', 'success');
+      
+      // Redirect to login page after 2 seconds
+      setTimeout(() => {
+        smoothTransition('index.html');
+      }, 2000);
+    }
+    
+    function showMessage(message, type) {
+      const resultElement = document.getElementById('registerResult');
+      resultElement.textContent = message;
+      resultElement.style.color = type === 'error' ? '#f43f5e' : '#22c55e';
+      
+      // Also show popup message
+      const popup = document.createElement('div');
+      popup.className = 'message-popup';
+      popup.textContent = message;
+      popup.style.color = type === 'error' ? '#f43f5e' : '#22c55e';
+      document.body.appendChild(popup);
+      
+      setTimeout(() => {
+        if (popup.parentNode) {
+          popup.parentNode.removeChild(popup);
+        }
+      }, 2500);
+    }
+
+    // Add some fun shark interaction
+    document.addEventListener('DOMContentLoaded', function() {
+      const sharks = document.querySelectorAll('.shark');
+      sharks.forEach(shark => {
+        shark.addEventListener('click', function() {
+          this.style.transform += ' scale(1.2)';
+          setTimeout(() => {
+            this.style.transform = this.style.transform.replace(' scale(1.2)', '');
+          }, 300);
+        });
+      });
+    });
+  </script>
+  <style>
+    /* Additional styles for registration form */
+    body { transition: opacity .2s ease; }
+    .fade-out { opacity: 0; }
+    
+    .form-row {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .form-row input {
+      flex: 1;
+    }
+    
+    .register-form {
+      width: 600px;
+      max-width: 92vw;
+    }
+    
+    @media (max-width: 640px) {
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      
+      .register-form {
+        width: 92vw;
+      }
+    }
+    
+    .back-button {
+      background: linear-gradient(180deg, #6b7280 0%, #4b5563 100%);
+      color: var(--text-main-dark);
+    }
+    
+    .back-button:hover {
+      box-shadow: 0 8px 18px rgba(107, 114, 128, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <!-- Enhanced Sharky ocean background & motion -->
+  <div class="ocean-bg" aria-hidden="true">
+    <!-- Sun -->
+    <div class="celestial-body sun"></div>
+    <!-- Ocean Floor with Sand -->
+    <div class="ocean-floor"></div>
+    <div class="sand-particles"></div>
+    <!-- Realistic Water System -->
+    <div class="water-surface">
+      <div class="water-depth"></div>
+      <div class="caustics"></div>
+      <div class="wave-layer wave1"></div>
+      <div class="wave-layer wave2"></div>
+      <div class="wave-layer wave3"></div>
+      <div class="wave-layer wave4"></div>
+      <div class="wave-layer wave5"></div>
+      <div class="wave-layer wave6"></div>
+    </div>
+    <!-- Background sharks -->
+    <div class="shark s1"></div>
+    <div class="shark s2"></div>
+    <div class="shark s3"></div>
+    <div class="bubbles"></div>
+  </div>
+  
+  <!-- Registration card -->
+  <div id="loginDiv" class="register-form">
+    <div class="title-container">
+      <h1 id="title">Join FinFinder</h1>
+    </div>
+    <span id="inner-title">Create your account to start exploring</span>
+    <div class="form-container">
+      <div class="form-inputs">
+        <div class="form-row">
+          <input type="text" id="firstName" placeholder="First Name" />
+          <input type="text" id="lastName" placeholder="Last Name" />
+        </div>
+        <input type="text" id="registerUsername" placeholder="Username" />
+        <input type="email" id="registerEmail" placeholder="Email Address" />
+        <input type="password" id="registerPassword" placeholder="Password" />
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" />
+        <span id="registerResult"></span>
+      </div>
+      <div class="form-controls">
+        <button type="button" id="registerButton" class="buttons" onclick="doRegister();">Create Account</button>
+        <button type="button" class="buttons back-button" onclick="smoothTransition('index.html');">Back to Login</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
