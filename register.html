@@ -1,194 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>FinFinder - Create Account</title>
   <script type="text/javascript" src="js/md5.js"></script>
   <script type="text/javascript" src="js/code.js"></script>
+  <script type="text/javascript" src="js/register.js"></script>
   <link href="css/styles.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="data:,">
-  <script type="text/javascript">
-    // Simple fix for back button - remove fade-out class when page shows
-    window.addEventListener('pageshow', function() {
-      document.body.classList.remove('fade-out');
-    });
-    
-    // Smooth page transition
-    function smoothTransition(url){
-      document.body.classList.add('fade-out');
-      setTimeout(() => location.href = url, 400);
-    }
-
-    // Registration form validation
-    function validateForm() {
-      const username = document.getElementById('registerUsername');
-      const password = document.getElementById('registerPassword');
-      const confirmPassword = document.getElementById('confirmPassword');
-      const firstName = document.getElementById('firstName');
-      const lastName = document.getElementById('lastName');
-      
-      // Clear previous results
-      document.getElementById('registerResult').textContent = '';
-      
-      // Remove any previous error styling
-      document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-      
-      // Basic validation
-      if (!firstName.value.trim()) {
-        showError(firstName, 'First name is required');
-        return false;
-      }
-      
-      if (!lastName.value.trim()) {
-        showError(lastName, 'Last name is required');
-        return false;
-      }
-      
-      if (!username.value.trim()) {
-        showError(username, 'Username is required');
-        return false;
-      }
-      
-      if (username.value.trim().length < 3) {
-        showError(username, 'Username must be at least 3 characters long');
-        return false;
-      }
-      
-      if (!password.value) {
-        showError(password, 'Password is required');
-        return false;
-      }
-      
-      if (password.value.length < 6) {
-        showError(password, 'Password must be at least 6 characters long');
-        return false;
-      }
-      
-      if (!confirmPassword.value) {
-        showError(confirmPassword, 'Please confirm your password');
-        return false;
-      }
-      
-      if (password.value !== confirmPassword.value) {
-        showError(confirmPassword, 'Passwords do not match');
-        return false;
-      }
-      
-      return true;
-    }
-    
-    function showError(field, message) {
-      field.classList.add('error');
-      field.focus();
-      showMessage(message, 'error');
-    }
-    
-    async function doRegister() {
-      if (!validateForm()) {
-        return;
-      }
-      
-      // Disable the register button to prevent double submission
-      const registerButton = document.getElementById('registerButton');
-      registerButton.disabled = true;
-      registerButton.textContent = 'Creating Account...';
-      
-      // Prepare data for API
-      const registerData = {
-        firstName: document.getElementById('firstName').value.trim(),
-        lastName: document.getElementById('lastName').value.trim(),
-        login: document.getElementById('registerUsername').value.trim(),
-        password: document.getElementById('registerPassword').value
-      };
-      
-      try {
-        const response = await fetch('LAMPAPI/Register.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(registerData)
-        });
-        
-        const result = await response.json();
-        
-        // Re-enable button
-        registerButton.disabled = false;
-        registerButton.textContent = 'Create Account';
-        
-        if (result.error && result.error !== '') {
-          // Handle specific database errors with user-friendly messages
-          let errorMessage = result.error;
-          if (result.error.includes('Duplicate entry')) {
-            errorMessage = 'Username already exists. Please choose a different username.';
-            showError(document.getElementById('registerUsername'), errorMessage);
-          } else if (result.error.includes('Data too long')) {
-            errorMessage = 'One or more fields are too long. Please use shorter values.';
-          } else if (result.error.includes('cannot be null')) {
-            errorMessage = 'All fields are required. Please fill in all information.';
-          }
-          showMessage(errorMessage, 'error');
-        } else {
-          // Success
-          showMessage('Account created successfully! Redirecting to login...', 'success');
-          
-          // Clear the form
-          document.getElementById('registerForm').reset();
-          
-          // Redirect to login page after 2 seconds
-          setTimeout(() => {
-            smoothTransition('index.html');
-          }, 2500);
-        }
-        
-      } catch (error) {
-        // Re-enable button
-        registerButton.disabled = false;
-        registerButton.textContent = 'Create Account';
-        
-        console.error('Registration error:', error);
-        showMessage('Network error. Please check your connection and try again.', 'error');
-      }
-    }
-    
-    function showMessage(message, type) {
-      const resultElement = document.getElementById('registerResult');
-      resultElement.textContent = message;
-      resultElement.style.color = type === 'error' ? '#f43f5e' : '#22c55e';
-      
-      // Also show popup message
-      const popup = document.createElement('div');
-      popup.className = 'message-popup';
-      popup.textContent = message;
-      popup.style.color = type === 'error' ? '#f43f5e' : '#22c55e';
-      popup.style.borderLeft = type === 'error' 
-        ? '4px solid #f43f5e' 
-        : '4px solid #22c55e';
-      
-      document.body.appendChild(popup);
-      
-      setTimeout(() => {
-        if (popup.parentNode) {
-          popup.parentNode.removeChild(popup);
-        }
-      }, 2500);
-    }
-  </script>
   <style>
-    /* Page transition helper - matches styles.css */
     body { transition: opacity .4s ease; }
     .fade-out { 
       opacity: 0;
       transform: translateY(-20px);
     }
     
-    /* Registration specific styles */
-    .register-form {
-      width: 600px;
-      max-width: 92vw;
-    }
-    
+    /* Form row layout for side-by-side name fields */
     .form-row {
       display: flex;
       gap: 15px;
@@ -197,54 +25,15 @@
     .form-row input {
       flex: 1;
     }
-    
-    .back-button {
-      background: linear-gradient(180deg, #6b7280 0%, #4b5563 100%);
-      color: var(--text-main-dark);
-    }
-    
-    .back-button:hover {
-      box-shadow: 0 8px 18px rgba(107, 114, 128, 0.4);
-    }
-    
-    .buttons:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-    
-    .buttons:disabled:hover {
-      transform: none;
-      box-shadow: none;
-      opacity: 0.6;
-    }
-    
-    /* Error styling */
-    input.error {
-      border-color: #f43f5e;
-      box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.1);
-    }
-    
-    @media (max-width: 640px) {
-      .form-row {
-        flex-direction: column;
-        gap: 0;
-      }
-      
-      .register-form {
-        width: 92vw;
-      }
-    }
   </style>
 </head>
 <body>
   <!-- Registration card -->
-  <div id="loginDiv" class="register-form">
+  <div id="loginDiv">
     <div class="title-container">
-      <h1 id="title">Join FinFinder</h1>
+      <h1 id="title">Join FinFinder!</h1>
     </div>
-    <span id="inner-title">Create your account to start exploring</span>
-    <form id="registerForm" class="form-container">
+    <div class="form-container">
       <div class="form-inputs">
         <div class="form-row">
           <input type="text" id="firstName" placeholder="First Name" />
@@ -252,14 +41,13 @@
         </div>
         <input type="text" id="registerUsername" placeholder="Username" />
         <input type="password" id="registerPassword" placeholder="Password" />
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" />
         <span id="registerResult"></span>
       </div>
       <div class="form-controls">
-        <button type="button" id="registerButton" class="buttons" onclick="doRegister();">Create Account</button>
-        <button type="button" class="buttons back-button" onclick="smoothTransition('index.html');">Back to Login</button>
+        <button type="button" class="buttons" onclick="doRegister();">Create Account</button>
+        <button type="button" class="buttons" onclick="smoothTransition('index.html');">Back to Login</button>
       </div>
-    </form>
+    </div>
   </div>
 </body>
 </html>
