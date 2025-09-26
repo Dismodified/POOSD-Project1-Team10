@@ -1,32 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>FinFinder</title>
-  <script type="text/javascript" src="js/md5.js"></script>
-  <script type="text/javascript" src="js/code.js"></script>
   <link href="css/styles.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@700;800&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <link rel="icon" href="data:,">
   <script type="text/javascript">
-    // Simple fix for back button - remove fade-out class when page shows
     window.addEventListener('pageshow', function() {
       document.body.classList.remove('fade-out');
     });
-    // Smooth page transition (updated timing to match CSS)
+    // Smooth page transition
     function smoothTransition(url){
       document.body.classList.add('fade-out');
       setTimeout(() => location.href = url, 400);
     }
   </script>
-  <style>
-    /* Page transition helper - matches styles.css */
-    body { transition: opacity .4s ease; }
-    .fade-out { 
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-  </style>
 </head>
 <body>
   <!-- Login card -->
@@ -47,5 +36,7 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript" src="js/md5.js"></script>
+  <script type="text/javascript" src="js/code.js"></script>
 </body>
 </html>
